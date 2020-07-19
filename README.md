@@ -19,3 +19,13 @@ Once the model has been trained, the input message given via the web application
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
+
+### Description:
+
+1. [jupyter notebooks](jupyter notebooks) contains the notebooks where exploration and first analysis has been done on the message data used to train the model as well as prototyping the ETL and ML pipelines.
+
+2. [data](data) contains the ETL pipeline and database storing the messages.
+
+3. [models](models) contains the ML pipeline used to train the NLP model.
+
+4. [app](app) contains the web application structure and leverages the files in data and models.
