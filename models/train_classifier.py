@@ -16,6 +16,16 @@ from sklearn.model_selection import GridSearchCV
 import pickle
 
 def load_data(database_filepath):
+    """
+    Load message data from sqlite database
+
+    Input: database filepath
+
+    Output:
+    X: pandas Series with messages
+    Y: pandas DataFrame with output class of each message
+    category_names: name of each output class
+    """
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('Messages',engine)
     X = df['message']
@@ -25,6 +35,13 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Tokenize message
+
+    Input: text
+
+    Output: list of cleaned tokens
+    """
     text = re.sub(r"[^a-zA-Z0-9]"," ",text)
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
@@ -38,6 +55,9 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Build classifier
+    """
     pipeline = Pipeline([
                         ('vect', CountVectorizer(tokenizer=tokenize)),
                         ('tfidf', TfidfTransformer()),
@@ -52,6 +72,15 @@ def build_model():
     return cv
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Print the classification report for each output class of the model
+
+    Input:
+    model: sklearn model
+    X_test: pandas Series with messages in the test dataset
+    Y_test: pandas DataFrame with output classes from test dataset
+    category_names: list of output class name
+    """
 
     Y_pred = model.predict(X_test)
     Y_pred = pd.DataFrame(Y_pred, index = Y_test.index, columns = Y_test.columns)
@@ -63,10 +92,22 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Dump model into pickle file
+
+    Input:
+    model: sklearn model
+    model_filepath: filepath where model should be stored
+    """
     pickle.dump(model, open(model_filepath, "wb"))
 
 
 def main():
+    """
+    Machine learning pipeline, build, train, evaluate and stores a model.
+
+    """
+
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
