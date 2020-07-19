@@ -22,7 +22,7 @@ Once the model has been trained, the input message given via the web application
 
 ### Description:
 
-1. [jupyter notebooks](jupyter notebooks) contains the notebooks where exploration and first analysis has been done on the message data used to train the model as well as prototyping the ETL and ML pipelines.
+1. [jupyter notebooks](jupyter-notebooks) contains the notebooks where exploration and first analysis has been done on the message data used to train the model as well as prototyping the ETL and ML pipelines.
 
 2. [data](data) contains the ETL pipeline and database storing the messages.
 
