@@ -12,7 +12,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 import pickle
 
 def load_data(database_filepath):
@@ -43,23 +43,23 @@ def build_model():
                         ('tfidf', TfidfTransformer()),
                         ('clf', MultiOutputClassifier(RandomForestClassifier()))
                         ])
-    
+
     parameters = {
                   'clf__estimator__n_estimators': [10,20]
                  }
     cv = GridSearchCV(pipeline, param_grid=parameters,verbose=10)
-    
+
     return cv
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    
+
     Y_pred = model.predict(X_test)
     Y_pred = pd.DataFrame(Y_pred, index = Y_test.index, columns = Y_test.columns)
     for i in range(len(category_names)):
         print(70*'='+'\nFeature: ',category_names[i])
         print(classification_report(Y_test.iloc[:,i],Y_pred.iloc[:,i]))
-    
-    
+
+
 
 
 def save_model(model, model_filepath):
@@ -72,13 +72,13 @@ def main():
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-        
+
         print('Building model...')
         model = build_model()
-        
+
         print('Training model...')
         model.fit(X_train, Y_train)
-        
+
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
 
