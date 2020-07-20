@@ -33,7 +33,11 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
-    #category_county = df.groupby('genre').count()['message']
+    #occurences of the different message types in teh training dataset
+    Y = df.iloc[:,4:]
+    categories = Y.columns.tolist()
+    occurences = Y.sum()
+    categories_count = occurences.sort_values(ascending=False).values
 
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -55,7 +59,26 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+      {
+          'data': [
+                Bar(
+                    x=categories,
+                    y=categories_count
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of message categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Message categories"
+                }
+            }
         }
+          
     ]
 
     # encode plotly graphs in JSON
