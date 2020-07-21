@@ -14,7 +14,7 @@ Once the model has been trained, the input message given via the web application
 
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
-2. Run the following command in the app's directory to run your web app.
+2. Run the following command in the project's root directory to run the web app.
 
     `python app/run.py`
 
