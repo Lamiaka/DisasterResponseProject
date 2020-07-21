@@ -16,7 +16,7 @@ Once the model has been trained, the input message given via the web application
 
 2. Run the following command in the app's directory to run your web app.
 
-    `python run.py`
+    `python app/run.py`
 
 3. Go to http://0.0.0.0:3001/
 
