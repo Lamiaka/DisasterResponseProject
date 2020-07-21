@@ -43,12 +43,15 @@ def clean_data(df):
 
     # drop the original categories column from `df`
     df.drop(columns = 'categories', inplace=True)
-    # concatenate the original dataframe with the new `categories` dataframe
 
+    # concatenate the original dataframe with the new `categories` dataframe
     df = pd.concat(objs= [df,categories],axis=1)
 
     # drop duplicates
     df.drop_duplicates(inplace=True)
+
+    # drop non-binary rows
+    df.drop(index=df[df.related > 1].index, inplace=True)
 
     return df
 
@@ -57,7 +60,7 @@ def save_data(df, database_filename):
     Save message dataframe into a sqlite database
     """
     engine = create_engine('sqlite:///'+database_filename)
-    df.to_sql('Messages', engine, index=False)
+    df.to_sql('Messages', engine, index=False, if_exists='replace')
 
 
 def main():
