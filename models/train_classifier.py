@@ -1,6 +1,20 @@
-import sys
+import sys, os
 import nltk
-nltk.download(['punkt', 'wordnet'])
+NLTK_DIR = os.path.join(sys.prefix, "nltk_data")   # inside the active environment, e.g. .venv/nltk_data
+
+NLTK_PACKAGES = {
+    "punkt": "tokenizers/punkt",
+    "punkt_tab": "tokenizers/punkt_tab",
+    "wordnet": "corpora/wordnet",
+    "omw-1.4": "corpora/omw-1.4",
+}
+
+for pkg, path in NLTK_PACKAGES.items():
+    try:
+        nltk.data.find(path)
+    except LookupError:
+        nltk.download(pkg, quiet=True, download_dir=NLTK_DIR)
+
 import pandas as pd
 from sqlalchemy import create_engine
 from nltk.tokenize import word_tokenize

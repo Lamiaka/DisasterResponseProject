@@ -5,6 +5,16 @@ An ETL and ML pipelines are developed to train a classifier on a series of label
 Once the model has been trained, the input message given via the web application passes through the pre-processing NLP pipeline and is served to the model that classifies it into the different disaster response classes.
 
 ### Instructions:
+Requires Python 3.12.
+
+```bash
+git clone https://github.com/Lamiaka/DisasterResponseProject.git
+cd DisasterResponseProject
+python3.12 -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
@@ -19,6 +29,8 @@ Once the model has been trained, the input message given via the web application
     `python app/run.py`
 
 3. Go to http://0.0.0.0:3001/
+
+The NLTK data the tokenizer needs is downloaded automatically on first run.
 
 ### Description:
 
